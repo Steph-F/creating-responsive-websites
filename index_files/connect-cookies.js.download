@@ -1,0 +1,27 @@
+function autoSubmitBanner( hubspotCount, cookieCount ) {
+	const bannerAccept = document.getElementById('hs-eu-confirmation-button');
+	if (bannerAccept) {
+		if (window.Cookiebot) {
+			if (window.Cookiebot.isOutsideEU) {
+				bannerAccept.click();
+			}
+		} else if ( cookieCount < 100 ) {
+			setTimeout( () => autoSubmitBanner(hubspotCount, cookieCount + 1 ), 2000);
+		} else {
+			bannerAccept.click();
+		}
+	} else {
+		setTimeout( () => autoSubmitBanner(hubspotCount + 1, cookieCount ), 2000);
+	}
+}
+
+setTimeout( () => autoSubmitBanner(0, 0), 0 );
+  
+window.CookiebotCallback_OnAccept = function CookiebotCallback_OnAccept() {
+	if (Cookiebot.consent.statistics) {
+		var hubspotAccept = document.getElementById('hs-eu-confirmation-button');
+		if (hubspotAccept) {
+			hubspotAccept.click();
+		}
+	}
+}

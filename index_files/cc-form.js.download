@@ -1,0 +1,17 @@
+(function($) {
+  $(document).ready(function() {
+    $('#mepr-stripe-payment-form').submit(function(e) {
+      e.preventDefault();
+      var submit = document.querySelector('#mepr-stripe-payment-form input[type="submit"]');
+      var ccForm = document.querySelector('.StripeElement');
+      var spinner = document.querySelector('.mepr-loading-gif');
+      var isComplete = ccForm.classList.contains('StripeElement--complete');
+
+      if (isComplete) {
+        submit.setAttribute('data-is-submitting', 'true');
+        submit.disabled = true;
+        spinner.style.opacity = '1';
+      }
+    });
+  });
+})(jQuery);
